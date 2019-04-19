@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof GitServiceException)
+        {
+            return view('home')->withErrors([$exception->getMessage()]);
+        }
         return parent::render($request, $exception);
     }
 }

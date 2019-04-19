@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <button v-if="score !== 1" @click="setScore(1)">
+        <button class="btn bg-success" v-if="score !== 1" @click="setScore(1)">
             <i class="fa fa-thumbs-up"></i>
         </button>
-        <button v-if="score !== 0" @click="setScore(0)">
+        <button class="btn bg-danger" v-if="score !== 0" @click="setScore(0)">
             <i class="fa fa-thumbs-down"></i>
         </button>
     </div>
@@ -16,8 +16,13 @@
                 type: Number,
                 required: true
             },
-            score: {
+            user_score: {
                 required: true
+            }
+        },
+        data() {
+            return {
+                score: this.user_score,
             }
         },
         methods: {
@@ -35,3 +40,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .btn i {
+        color: white;
+    }
+</style>

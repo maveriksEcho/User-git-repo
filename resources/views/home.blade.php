@@ -20,7 +20,7 @@
                             @csrf
                         </div>
                             <button type="submit" class="btn btn-primary mb-2">Search</button>
-                            <a href="{{route('home')}}">Reset</a>
+                            <a href="{{route('home')}}" style="margin-left: 20px">Reset</a>
                         </form>
                         <table class="table table-striped">
                             <thead>
@@ -28,8 +28,6 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Url</th>
-                           {{--     <th scope="col">Watch</th>
-                                <th scope="col">Star</th>--}}
                                 <th scope="col">Score</th>
                             </tr>
                             </thead>
@@ -37,12 +35,12 @@
                             @if ($repos)
                                 @foreach($repos as $repo)
                             <tr>
-                                <th scope="row">{{ $repo['id']}}</th>
-                                <td><a href="{{url('/details/' . $repo['id'])}}">{{ $repo['name']}}</a></td>
-                                <td><a href="{{ $repo['owner']['html_url']}}" >{{ $repo['owner']['html_url'] }}</a></td>
+                                <th scope="row">{{ $repo['id'] ?? 0}}</th>
+                                <td><a href="{{url('/details/' . $repo['id'] ?? '')}}" target="_blank">{{ $repo['name'] ?? ''}}</a></td>
+                                <td><a href="{{ $repo['owner']['html_url'] ?? ''}}"  target="_blank" >{{ $repo['owner']['html_url'] ?? '' }} </a></td>
                            {{--     <td>{{ $repo['watchers_count']}}</td>
                                 <td>{{ $repo['stargazers_count']}}</td>--}}
-                                <td><score :repo_id = {{$repo['id']}}  :score = {{$repo['score']}} ></score></td>
+                                <td><score :repo_id = {{$repo['id'] ?? 0 }}  :user_score = {{$repo['score'] ?? -1}} ></score></td>
                             </tr>
                                 @endforeach
                              @endif

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Score;
 use App\User;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,11 +51,23 @@ class HomeController extends Controller
      */
     private function getScore($repos)
     {
-        $res = [];
+        /*$res = [];
         foreach ($repos as $repo){
             $score = Score::select('score')->where('user_id', Auth::user()->id)->where('repo_id', $repo['id'])->first();
             $res[] = array_merge($repo, ['score' => $score ? $score->score : -1]);
-        }
+        }*/
+        /**
+         * @var Score $scores
+         */
+        $scores = Score::select(['repo_id','score'])->where('user_id', Auth::user()->id)->get();
+        $res = collect($repos)->transform(function ($repo) use ($scores) {
+            foreach ($scores as $score){
+                if($repo['id'] == $score['repo_id']){
+                    return array_merge($repo, ['score' => $score['score']]);
+                }
+            }
+            return $repo;
+        });
         return $res;
     }
 
@@ -64,8 +77,13 @@ class HomeController extends Controller
      */
     private function getScoreForDetails($repo)
     {
-        $like = Score::where('repo_id', $repo['id'])->where('score', 1)->count();
-        $dislike = Score::where('repo_id', $repo['id'])->where('score', 0)->count();
+        /**
+         * @var Builder $query
+         */
+        $query = Score::where('repo_id', $repo['id']);
+
+        $like = $query->where('score', 1)->count();
+        $dislike = $query->where('score', 0)->count();
         return array_merge($repo, ['like' => $like, 'dislike' => $dislike]);
     }
 

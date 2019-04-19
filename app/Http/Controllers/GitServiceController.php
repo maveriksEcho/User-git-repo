@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\GitServiceException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,6 +11,9 @@ class GitServiceController extends Controller
     private $url;
     private $per_page;
 
+    /**
+     * GitServiceController constructor.
+     */
     public function __construct ()
     {
         $this->url      = config('git.url');
@@ -50,7 +54,7 @@ class GitServiceController extends Controller
     /**
      * @param $url
      * @return mixed
-     * @throws \Exception
+     * @throws GitServiceException
      */
     private function request($url){
         $curl = curl_init();
@@ -64,11 +68,11 @@ class GitServiceController extends Controller
         );
         $response = curl_exec($curl);
         $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-     /*   if ($http_status !== 200)
+        if (!$response || $http_status !== 200)
         {
-            logger($url, [$response]);
-            throw new \Exception('fail');
-        }*/
+            logger('fail send request: ' . $url, [$response]);
+            throw new GitServiceException('fail send request');
+        }
         curl_close($curl);
         return json_decode($response, true);
     }
