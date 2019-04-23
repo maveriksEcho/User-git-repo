@@ -25,7 +25,7 @@ class GitServiceController extends Controller
      */
     public function getUserRepo()
     {
-        $url = 'users/' . Auth::user()->name . '/repos?per_page=' . $this->per_page;
+        $url = 'repositories?per_page=' . $this->per_page;
         return $this->request($url);
     }
 
