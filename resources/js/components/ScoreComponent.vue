@@ -31,7 +31,6 @@
                         repo_id: this.repo_id,
                         score: s
                     }).then(response => {
-                        console.log(response.data);
                         this.score = s;
                     }).catch(error => {
                         console.log(error.response);

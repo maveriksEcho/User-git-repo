@@ -40,7 +40,8 @@
                                 <td><a href="{{ $repo['owner']['html_url'] ?? ''}}"  target="_blank" >{{ $repo['owner']['html_url'] ?? '' }} </a></td>
                            {{--     <td>{{ $repo['watchers_count']}}</td>
                                 <td>{{ $repo['stargazers_count']}}</td>--}}
-                                <td><score :repo_id = {{$repo['id'] ?? 0 }}  :user_score = {{$repo['score'] ?? -1}} ></score></td>
+
+                                <td><score :repo_id = {{ $repo['id'] ?? 0 }}  :user_score = {{$repo['score'] ?? -1}} ></score></td>
                             </tr>
                                 @endforeach
                              @endif

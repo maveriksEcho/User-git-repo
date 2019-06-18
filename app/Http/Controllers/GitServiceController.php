@@ -24,8 +24,9 @@ class GitServiceController extends Controller
      * @throws \Exception
      */
     public function getUserRepo()
-    {        
-        return $this->searchByName('random');
+    {
+        $url = 'repositories?per_page='. $this->per_page;
+        return $this->request($url);
     }
 
     /**

@@ -40,6 +40,9 @@ class HomeController extends Controller
      */
     public function search(Request $request)
     {
+        $this->validate($request,[
+            'search' => 'required|string'
+        ]);
         $repos = (new GitServiceController())->searchByName($request->get('search'));
         $repos = $this->getScore($repos['items']);
         return view('home', compact('repos'));
