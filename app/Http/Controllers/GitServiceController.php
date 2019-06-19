@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract\GitService;
 use App\Exceptions\GitServiceException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class GitServiceController extends Controller
+class GitServiceController extends Controller implements GitService
 {
     private $url;
     private $per_page;

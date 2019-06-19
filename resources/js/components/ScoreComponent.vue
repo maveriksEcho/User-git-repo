@@ -27,7 +27,7 @@
         },
         methods: {
             setScore(s) {
-                    axios.post('score', {
+                    axios.post('/score', {
                         repo_id: this.repo_id,
                         score: s
                     }).then(response => {

@@ -62,6 +62,10 @@
                                 <th scope="row">Language</th>
                                 <td>{{ $repo['language']}}</td>
                             </tr>
+                            <tr>
+                                <th scope="row">Score</th>
+                                <td><score :repo_id = {{ $repo['id'] ?? 0 }}  :user_score = {{$repo['score'] ?? -1}} ></score></td>
+                            </tr>
                              @endif
                             </tbody>
                         </table>
